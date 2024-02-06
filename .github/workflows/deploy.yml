@@ -8,23 +8,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
-          node-version: 18.x
+          node-version: 16.x
           cache: "npm"
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build Project
+      - name: Build project
         run: npm run build
 
+        #   - name: Deploy to Netlify
+        # uses: netlify/actions/cli@v1
+        # with:
+        #   args: deploy --prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{secrets.NETLIFY_AUTH_TOKEN}}
-          NETLIFY_SITE_ID: ${{secrets.NETLIFY_SITE_ID}}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
