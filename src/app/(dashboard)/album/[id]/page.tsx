@@ -2,14 +2,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "@/components/navbar/Navbar";
+import { photoInterface } from "../../../../../types";
 
 export default function page({ params }: any) {
-  const [photos, setPhotos] = useState<any>([]);
+  const [photos, setPhotos] = useState<photoInterface[]>([]);
   const [album, seAlbum] = useState<any>([]);
 
   useEffect(() => {
     axios
-      .get(`https://jsonplaceholder.typicode.com/album/${params.id}`)
+      .get(`https://jsonplaceholder.typicode.com/albums/${params.id}`)
       .then(function (response) {
         // handle success
         if (response.status !== 200) {
@@ -40,6 +41,24 @@ export default function page({ params }: any) {
   return (
     <div>
       <Navbar />
+      <div>
+        <h1>Album Name: {album && album.title}</h1>
+
+        <div className="grid grid-cols-4 gap-5 px-6">
+          {photos &&
+            photos.map((photo: photoInterface, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className="shadow-md rounded-md cursor-pointer"
+                >
+                  <img src={photo.thumbnailUrl} alt={photo.thumbnailUrl} />
+                  <span className="w-[80px]">{photo.title}</span>
+                </div>
+              );
+            })}
+        </div>
+      </div>
     </div>
   );
 }
