@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import React from "react";
 import googleImg from "./../../../public/google.svg";
@@ -8,8 +7,6 @@ import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
 
 export default function Navbar() {
-  console.log(auth?.currentUser?.email);
-
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
@@ -42,4 +39,3 @@ export default function Navbar() {
     </div>
   );
 }
-
