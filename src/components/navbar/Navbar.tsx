@@ -5,11 +5,13 @@ import googleImg from "./../../../public/google.svg";
 import Image from "next/image";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
+import { redirect } from "next/navigation";
 
 export default function Navbar() {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      redirect("/users");
     } catch (error) {
       console.error(error);
     }
