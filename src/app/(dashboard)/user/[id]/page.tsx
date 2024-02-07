@@ -9,7 +9,6 @@ import albumImage from "./../../../../../public/album.svg";
 export default function page({ params }: any) {
   const [albums, setAlbums] = useState<any>([]);
   const [user, setUser] = useState<any>([]);
-  console.log(params);
   useEffect(() => {
     axios
       .get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
@@ -32,7 +31,6 @@ export default function page({ params }: any) {
         if (response.status !== 200) {
         }
 
-        console.log(response.data);
         setAlbums(response.data);
       })
       .catch(function (error) {
