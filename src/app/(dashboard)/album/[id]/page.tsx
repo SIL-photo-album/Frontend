@@ -4,10 +4,12 @@ import axios from "axios";
 import Navbar from "@/components/navbar/Navbar";
 import { photoInterface } from "../../../../../types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function page({ params }: any) {
   const [photos, setPhotos] = useState<photoInterface[]>([]);
   const [album, seAlbum] = useState<any>([]);
+  const router = useRouter();
 
   useEffect(() => {
     axios
@@ -42,6 +44,9 @@ export default function page({ params }: any) {
   return (
     <div>
       <Navbar />
+      <button type="button" onClick={() => router.back()}>
+        Click here to go back
+      </button>
       <div>
         <h1>Album Name: {album && album.title}</h1>
 
@@ -54,7 +59,11 @@ export default function page({ params }: any) {
                   key={index}
                   className="shadow-md rounded-md cursor-pointer"
                 >
-                  <img src={photo.thumbnailUrl} alt={photo.thumbnailUrl} />
+                  <img
+                    src={photo.thumbnailUrl}
+                    alt={photo.thumbnailUrl}
+                    className="w-[150px] h-[150px]"
+                  />
                   <span className="w-[80px]">{photo.title}</span>
                 </Link>
               );
