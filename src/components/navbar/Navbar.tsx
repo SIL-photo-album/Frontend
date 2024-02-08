@@ -5,13 +5,16 @@ import googleImg from "./../../../public/google.svg";
 import Image from "next/image";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
+
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      redirect("/users");
+      const result = await signInWithPopup(auth, googleProvider);
+      localStorage.setItem("email", JSON.stringify(result.user.email));
+      router.push("/home");
     } catch (error) {
       console.error(error);
     }
@@ -20,14 +23,17 @@ export default function Navbar() {
   const logOut = async () => {
     try {
       await signOut(auth);
+      localStorage.clear();
+      router.push("/");
     } catch (error) {
       console.error(error);
     }
   };
+  const userEmail = localStorage.getItem("email");
   return (
     <div className="flex justify-between px-16 py-8 shadow-md">
       <Link href="/">Ian Kamau</Link>
-      {auth?.currentUser?.email ? (
+      {userEmail !== null ? (
         <button onClick={logOut}>Logout</button>
       ) : (
         <button

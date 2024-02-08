@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "@/components/navbar/Navbar";
 import { photoInterface } from "../../../../../types";
+import Link from "next/link";
 
 export default function page({ params }: any) {
   const [photos, setPhotos] = useState<photoInterface[]>([]);
@@ -48,13 +49,14 @@ export default function page({ params }: any) {
           {photos &&
             photos.map((photo: photoInterface, index: number) => {
               return (
-                <div
+                <Link
+                  href={`/photo/${photo.id}`}
                   key={index}
                   className="shadow-md rounded-md cursor-pointer"
                 >
                   <img src={photo.thumbnailUrl} alt={photo.thumbnailUrl} />
                   <span className="w-[80px]">{photo.title}</span>
-                </div>
+                </Link>
               );
             })}
         </div>
