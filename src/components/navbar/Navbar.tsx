@@ -12,7 +12,9 @@ export default function Navbar() {
 
   const signInWithGoogle = async () => {
     try {
-      // await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log(result.user.email);
+      localStorage.setItem("email", JSON.stringify(result.user.email));
       router.push("/home");
     } catch (error) {
       console.error(error);
@@ -22,14 +24,17 @@ export default function Navbar() {
   const logOut = async () => {
     try {
       await signOut(auth);
+      localStorage.clear();
+      router.push("/");
     } catch (error) {
       console.error(error);
     }
   };
+  const userEmail = localStorage.getItem("email");
   return (
     <div className="flex justify-between px-16 py-8 shadow-md">
       <Link href="/">Ian Kamau</Link>
-      {auth?.currentUser?.email ? (
+      {userEmail !== null ? (
         <button onClick={logOut}>Logout</button>
       ) : (
         <button
