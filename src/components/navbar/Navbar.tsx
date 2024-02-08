@@ -13,7 +13,6 @@ export default function Navbar() {
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log(result.user.email);
       localStorage.setItem("email", JSON.stringify(result.user.email));
       router.push("/home");
     } catch (error) {
