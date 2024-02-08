@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import googleImg from "./../../../public/google.svg";
 import Image from "next/image";
 import { signInWithPopup, signOut } from "firebase/auth";
@@ -8,6 +8,7 @@ import { auth, googleProvider } from "@/config/firebase";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const router = useRouter();
 
   const signInWithGoogle = async () => {
@@ -29,7 +30,12 @@ export default function Navbar() {
       console.error(error);
     }
   };
-  const userEmail = localStorage.getItem("email");
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+
+    setUserEmail(email);
+  }, []);
   return (
     <div className="flex justify-between px-16 py-8 shadow-md">
       <Link href="/">Ian Kamau</Link>
