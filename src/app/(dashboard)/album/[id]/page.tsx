@@ -5,8 +5,10 @@ import Navbar from "@/components/navbar/Navbar";
 import { photoInterface } from "../../../../../types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import backIcon from "./../../../../../public/backIcon.svg";
 
-export default function page({ params }: any) {
+export default function page({ params }: { params: { id: string } }) {
   const [photos, setPhotos] = useState<photoInterface[]>([]);
   const [album, seAlbum] = useState<any>([]);
   const router = useRouter();
@@ -33,7 +35,6 @@ export default function page({ params }: any) {
         if (response.status !== 200) {
         }
 
-        console.log(response.data);
         setPhotos(response.data);
       })
       .catch(function (error) {
@@ -44,27 +45,35 @@ export default function page({ params }: any) {
   return (
     <div>
       <Navbar />
-      <button type="button" onClick={() => router.back()}>
-        Click here to go back
+      <button
+        type="button"
+        className="flex pt-3 px-2 gap-1 justify-center items-center border-black rounded-md"
+        onClick={() => router.back()}
+      >
+        <Image src={backIcon} width={20} height={20} alt={backIcon} />
+        <span>Go back</span>
       </button>
-      <div>
-        <h1>Album Name: {album && album.title}</h1>
+      <div className="flex flex-col gap-5 pt-3 px-2">
+        <div className="flex gap-2">
+          <h1 className="font-bold">Album Name:</h1>
+          <span> {album && album.title}</span>
+        </div>
 
-        <div className="grid grid-cols-4 gap-5 px-6">
+        <div className="grid py-3 grid-cols-4 gap-5 px-3 mobile:grid-cols-2">
           {photos &&
             photos.map((photo: photoInterface, index: number) => {
               return (
                 <Link
                   href={`/photo/${photo.id}`}
                   key={index}
-                  className="shadow-md rounded-md cursor-pointer"
+                  className="flex flex-col shadow-md rounded-md gap-2 cursor-pointer"
                 >
                   <img
                     src={photo.thumbnailUrl}
                     alt={photo.thumbnailUrl}
                     className="w-[150px] h-[150px]"
                   />
-                  <span className="w-[80px]">{photo.title}</span>
+                  <span className="flex flex-nowrap">{photo.title}</span>
                 </Link>
               );
             })}

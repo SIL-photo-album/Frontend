@@ -6,7 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import albumImage from "./../../../../../public/album.svg";
 
-export default function page({ params }: any) {
+export default function page({ params }: { params: { id: string } }) {
   const [albums, setAlbums] = useState<any>([]);
   const [user, setUser] = useState<any>([]);
   useEffect(() => {
@@ -42,11 +42,11 @@ export default function page({ params }: any) {
     <div>
       <Navbar />
 
-      <h1>User Name: {user.name}</h1>
-      <div>
+      <h1 className="pt-3 px-2">User Name: {user.name}</h1>
+      <div className="py-3 px-2">
         <h1 className="font-bold text-lg">Albums</h1>
 
-        <div className="grid grid-cols-4 px-6 gap-7">
+        <div className="grid grid-cols-4 px-6 gap-7 mobile:grid-cols-2">
           {albums.map((album: any, index: number) => {
             return (
               <Link
