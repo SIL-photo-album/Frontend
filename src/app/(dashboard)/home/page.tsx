@@ -6,7 +6,7 @@ import Image from "next/image";
 import albumImage from "./../../../../public/album.svg";
 import { useState, useEffect } from "react";
 
-export default function users() {
+export default function Users() {
   const [users, setUsers] = useState<any>([]);
   const [albums, setAlbums] = useState<any>([]);
 
