@@ -7,7 +7,7 @@ import { photoInterface } from "../../../../../types";
 import Navbar from "@/components/navbar/Navbar";
 import { useRouter } from "next/navigation";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [photo, setPhoto] = useState<photoInterface>();
   const [isEdit, setIsEdit] = useState<boolean>(false);

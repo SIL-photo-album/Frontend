@@ -6,7 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import albumImage from "./../../../../../public/album.svg";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const [albums, setAlbums] = useState<any>([]);
   const [user, setUser] = useState<any>([]);
   useEffect(() => {
