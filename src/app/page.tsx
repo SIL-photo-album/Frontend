@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Navbar from "@/components/navbar/Navbar";
 
-export default function page() {
+export default function Page() {
   return (
     <div>
       <Navbar />

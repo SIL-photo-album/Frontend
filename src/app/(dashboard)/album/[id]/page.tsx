@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import backIcon from "./../../../../../public/backIcon.svg";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const [photos, setPhotos] = useState<photoInterface[]>([]);
   const [album, seAlbum] = useState<any>([]);
   const router = useRouter();
