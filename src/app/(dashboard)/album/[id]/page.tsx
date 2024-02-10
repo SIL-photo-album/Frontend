@@ -10,38 +10,38 @@ import backIcon from "./../../../../../public/backIcon.svg";
 
 export default function Page({ params }: { params: { id: string } }) {
   const [photos, setPhotos] = useState<photoInterface[]>([]);
-  const [album, seAlbum] = useState<any>([]);
+  const [album, setAlbum] = useState<any>([]);
   const router = useRouter();
 
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/albums/${params.id}`)
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+    Promise.all([
+      axios.get(`https://jsonplaceholder.typicode.com/albums/${params.id}`),
+      axios.get(
+        `https://jsonplaceholder.typicode.com/photos?albumId=${params.id}`
+      ),
+    ])
+      .then(function (responses) {
+        const albumResponse = responses[0];
+        const photosResponse = responses[1];
+
+        if (albumResponse.status !== 200) {
+          // handle error
+        } else {
+          setAlbum(albumResponse.data);
         }
 
-        seAlbum(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-
-    axios
-      .get(`https://jsonplaceholder.typicode.com/photos?albumId=${params.id}`)
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+        if (photosResponse.status !== 200) {
+          // handle error
+        } else {
+          setPhotos(photosResponse.data);
         }
-
-        setPhotos(response.data);
       })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      .catch(function (errors) {
+        // handle errors
+        console.log(errors);
       });
   }, [params.id]);
+
   return (
     <div>
       <Navbar />
