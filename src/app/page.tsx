@@ -17,8 +17,8 @@ export default function Page() {
           photos respectively.
         </span>
         <span>
-          Click the "Sign in with Google" button to sign up or login. After
-          signing up, you will be redirected to the home page.
+          Click the &quot;Sign in with Google &quot; button to sign up or login.
+          After signing up, you will be redirected to the home page.
         </span>
 
         <div className="py-[2em]">
