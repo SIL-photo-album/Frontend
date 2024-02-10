@@ -5,8 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import albumImage from "./../../../../public/album.svg";
 import { useState, useEffect } from "react";
+import User from "@/components/user/user";
+import { album, user } from "../../../../types";
 
 export default function Users() {
+  const [numberOfAlbums, setsetNumberOfAlbums] = useState<any>([]);
   const [users, setUsers] = useState<any>([]);
   const [albums, setAlbums] = useState<any>([]);
 
@@ -32,7 +35,6 @@ export default function Users() {
         if (response.status !== 200) {
         }
 
-        console.log(response.data);
         setAlbums(response.data);
       })
       .catch(function (error) {
@@ -47,26 +49,42 @@ export default function Users() {
       <div className="flex flex-col gap-2 p-[1em]">
         <div className="flex flex-col gap-3 mt-4">
           <h1 className="font-bold text-lg">Users</h1>
-          {users &&
-            users.map((user: { id: number; name: string }) => {
-              return (
-                <div key={user.id}>
-                  <Link
-                    href={`/user/${user.id}`}
-                    className="hover:text-blue-500"
-                  >
-                    {user.name}
-                  </Link>
-                </div>
-              );
-            })}
+
+          <div className="flex flex-wrap items-center ml-[2em] py-[2em] gap-[2em]">
+            {users &&
+              users.map((user: user) => {
+                axios
+                  .get(
+                    `https://jsonplaceholder.typicode.com/albums?userId=${user.id}`
+                  )
+                  .then(function (response) {
+                    // handle success
+                    if (response.status !== 200) {
+                    }
+
+                    setsetNumberOfAlbums(response.data);
+                  })
+                  .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                  });
+
+                return (
+                  <User
+                    key={user.id}
+                    user={user}
+                    numberOfAlbums={numberOfAlbums}
+                  />
+                );
+              })}
+          </div>
         </div>
 
         <div>
           <h1 className="font-bold text-lg">Albums</h1>
 
           <div className="grid grid-cols-4 px-6 gap-7">
-            {albums.map((album: any, index: number) => {
+            {albums.map((album: album, index: number) => {
               return (
                 <Link
                   href={`/album/${album.id}`}
