@@ -5,8 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import albumImage from "./../../../../../public/album.svg";
+import { useRouter } from "next/navigation";
+import backIcon from "./../../../../../public/backIcon.svg";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const [albums, setAlbums] = useState<any>([]);
   const [user, setUser] = useState<any>([]);
   useEffect(() => {
@@ -41,6 +44,14 @@ export default function Page({ params }: { params: { id: string } }) {
   return (
     <div>
       <Navbar />
+      <button
+        type="button"
+        className="flex gap-1 justify-center items-center mt-5 border-black rounded-md"
+        onClick={() => router.back()}
+      >
+        <Image src={backIcon} width={20} height={20} alt={backIcon} />
+        <span>Go back</span>
+      </button>
 
       <h1 className="pt-3 px-2">User Name: {user.name}</h1>
       <div className="py-3 px-2">

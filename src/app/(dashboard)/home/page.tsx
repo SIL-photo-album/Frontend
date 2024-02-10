@@ -44,17 +44,23 @@ export default function Users() {
     <div>
       <Navbar />
 
-      <div className="flex flex-col gap-2">
-        {users &&
-          users.map((user: { id: number; name: string }) => {
-            return (
-              <div key={user.id}>
-                <Link href={`/user/${user.id}`} className="hover:text-blue-500">
-                  {user.name}
-                </Link>
-              </div>
-            );
-          })}
+      <div className="flex flex-col gap-2 p-[1em]">
+        <div className="flex flex-col gap-3 mt-4">
+          <h1 className="font-bold text-lg">Users</h1>
+          {users &&
+            users.map((user: { id: number; name: string }) => {
+              return (
+                <div key={user.id}>
+                  <Link
+                    href={`/user/${user.id}`}
+                    className="hover:text-blue-500"
+                  >
+                    {user.name}
+                  </Link>
+                </div>
+              );
+            })}
+        </div>
 
         <div>
           <h1 className="font-bold text-lg">Albums</h1>
@@ -73,7 +79,7 @@ export default function Users() {
                     height={70}
                     alt={albumImage}
                   />
-                  <span>{album.title}</span>
+                  <span className="hover:text-blue-500">{album.title}</span>
                 </Link>
               );
             })}
