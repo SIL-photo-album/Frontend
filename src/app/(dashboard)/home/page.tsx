@@ -14,34 +14,31 @@ export default function Users() {
   const [albums, setAlbums] = useState<any>([]);
 
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+    Promise.all([
+      axios.get("https://jsonplaceholder.typicode.com/users"),
+      axios.get("https://jsonplaceholder.typicode.com/albums"),
+    ])
+      .then(function (responses) {
+        const usersResponse = responses[0];
+        const albumsResponse = responses[1];
+
+        if (usersResponse.status !== 200) {
+          // handle error
+        } else {
+          setUsers(usersResponse.data);
         }
 
-        setUsers(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-
-    axios
-      .get("https://jsonplaceholder.typicode.com/albums")
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+        if (albumsResponse.status !== 200) {
+          // handle error
+        } else {
+          setAlbums(albumsResponse.data);
         }
-
-        setAlbums(response.data);
       })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      .catch(function (errors) {
+        console.log(errors);
       });
   }, []);
+
   return (
     <div>
       <Navbar />
@@ -65,7 +62,6 @@ export default function Users() {
                     setsetNumberOfAlbums(response.data);
                   })
                   .catch(function (error) {
-                    // handle error
                     console.log(error);
                   });
 
