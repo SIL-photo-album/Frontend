@@ -22,10 +22,10 @@ export default function Navbar() {
   };
 
   const logOut = async () => {
-    router.push("/");
     try {
-      await signOut(auth);
       localStorage.clear();
+      router.push("/");
+      await signOut(auth);
     } catch (error) {
       console.error(error);
     }
