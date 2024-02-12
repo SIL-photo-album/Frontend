@@ -68,10 +68,12 @@ export default function Page({ params }: { params: { id: string } }) {
                   key={index}
                   className="flex flex-col shadow-md rounded-md gap-2 cursor-pointer"
                 >
-                  <img
+                  <Image
                     src={photo.thumbnailUrl}
                     alt={photo.thumbnailUrl}
-                    className="w-[150px] h-[150px]"
+                    // className="w-[150px] h-[150px]"
+                    width={150}
+                    height={150}
                   />
                   <span className="flex flex-nowrap">{photo.title}</span>
                 </Link>

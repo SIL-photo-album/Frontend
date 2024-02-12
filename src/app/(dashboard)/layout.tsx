@@ -12,13 +12,13 @@ export default function RootLayout({
 }>) {
   const router = useRouter();
 
-  useEffect(() => {
+useEffect(() => {
     const email = localStorage.getItem("email");
 
     if (!email) {
       router.push("/");
     }
-  }, []);
+  });
   return (
     <html lang="en">
       <body >{children}</body>
