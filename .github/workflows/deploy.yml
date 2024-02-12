@@ -26,7 +26,7 @@ jobs:
       - name: Next Lint
         run: npm run lint
 
-      - name: Testing APp
+      - name: Testing App
         run: npm run test
 
       - name: Build project
