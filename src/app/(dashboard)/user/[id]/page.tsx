@@ -40,7 +40,7 @@ export default function Page({ params }: { params: { id: string } }) {
         // handle error
         console.log(error);
       });
-  }, []);
+  }, [params.id]);
   return (
     <div>
       <Navbar />
