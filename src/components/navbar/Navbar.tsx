@@ -22,10 +22,10 @@ export default function Navbar() {
   };
 
   const logOut = async () => {
+    router.push("/");
     try {
       await signOut(auth);
       localStorage.clear();
-      router.push("/");
     } catch (error) {
       console.error(error);
     }
@@ -37,14 +37,14 @@ export default function Navbar() {
     setUserEmail(email);
   }, []);
   return (
-    <div className="flex justify-between px-16 py-8 shadow-md">
+    <div className="flex justify-between px-16 py-8 shadow-md mobile:px-5">
       <Link href="/">Ian Kamau</Link>
       {userEmail !== null ? (
         <button onClick={logOut}>Logout</button>
       ) : (
         <button
           onClick={signInWithGoogle}
-          className="flex items-center gap-2 px-3 py-1 border-[1px] border-black rounded-md outline-none"
+          className="flex items-center gap-2 px-3 py-1 border-[1px] border-black rounded-md outline-none mobile:text-small mobile:flex-nowrap"
         >
           <Image src={googleImg} width={20} height={20} alt={googleImg} />
           Sign in with Google
