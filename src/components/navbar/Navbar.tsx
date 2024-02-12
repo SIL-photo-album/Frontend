@@ -5,17 +5,17 @@ import googleImg from "./../../../public/google.svg";
 import Image from "next/image";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const router = useRouter();
+  // const router = useRouter();
 
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       localStorage.setItem("email", JSON.stringify(result.user.email));
-      router.push("/home");
+      // router.push("/home");
     } catch (error) {
       console.error(error);
     }
@@ -25,7 +25,7 @@ export default function Navbar() {
     try {
       await signOut(auth);
       localStorage.clear();
-      router.push("/");
+      // router.push("/");
     } catch (error) {
       console.error(error);
     }
