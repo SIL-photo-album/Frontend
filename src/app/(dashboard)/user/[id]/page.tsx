@@ -59,7 +59,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
         <div className="grid grid-cols-4 px-6 gap-7 mobile:grid-cols-2">
           {albums.map((album: album, index: number) => {
-            return <Album title={album.title} albumId={album.id} />;
+            return <Album key={index} title={album.title} albumId={album.id} />;
           })}
         </div>
       </div>
