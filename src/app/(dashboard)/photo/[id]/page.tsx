@@ -28,7 +28,7 @@ export default function Page({ params }: { params: { id: string } }) {
         // handle error
         console.log(error);
       });
-  }, []);
+  }, [params.id]);
   return (
     <div>
       <Navbar />
@@ -46,7 +46,9 @@ export default function Page({ params }: { params: { id: string } }) {
           className="flex flex-col items-center py-[2em] mt-[10px]
          mobile:overflow-hidden"
         >
-          <img
+          <Image
+            width={600}
+            height={600}
             src={photo.url}
             className="w-[600px] h-[600px] rounded mobile:w-[300px] mobile:h-[300px]"
             alt={photo.url}

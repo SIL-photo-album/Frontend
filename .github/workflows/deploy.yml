@@ -23,6 +23,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Next Lint
+        run: npm run lint
+
+      - name: Next Lint
+        run: npm run lint
+
       - name: Build project
         run: npm run build
 
@@ -32,5 +38,4 @@ jobs:
         #   args: deploy --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
