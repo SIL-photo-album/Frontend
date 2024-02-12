@@ -2,11 +2,11 @@
 import Navbar from "@/components/navbar/Navbar";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import albumImage from "./../../../../../public/album.svg";
 import { useRouter } from "next/navigation";
 import backIcon from "./../../../../../public/backIcon.svg";
+import Album from "@/components/album/album";
+import { album } from "../../../../../types";
 
 export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -58,22 +58,8 @@ export default function Page({ params }: { params: { id: string } }) {
         <h1 className="font-bold text-lg">Albums</h1>
 
         <div className="grid grid-cols-4 px-6 gap-7 mobile:grid-cols-2">
-          {albums.map((album: any, index: number) => {
-            return (
-              <Link
-                href={`/album/${album.id}`}
-                key={index}
-                className="shadow-md cursor-pointer flex flex-col item-center justify-center px-3 py-5 rounded-md gap-2 hover:shadow-lg"
-              >
-                <Image
-                  src={albumImage}
-                  width={70}
-                  height={70}
-                  alt={albumImage}
-                />
-                <span>{album.title}</span>
-              </Link>
-            );
+          {albums.map((album: album, index: number) => {
+            return <Album title={album.title} albumId={album.id} />;
           })}
         </div>
       </div>
