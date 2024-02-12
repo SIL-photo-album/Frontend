@@ -71,7 +71,6 @@ export default function Page({ params }: { params: { id: string } }) {
                   <Image
                     src={photo.thumbnailUrl}
                     alt={photo.thumbnailUrl}
-                    // className="w-[150px] h-[150px]"
                     width={150}
                     height={150}
                   />

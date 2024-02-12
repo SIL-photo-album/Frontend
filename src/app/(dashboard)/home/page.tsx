@@ -4,9 +4,10 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import albumImage from "./../../../../public/album.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import User from "@/components/user/user";
 import { album, user } from "../../../../types";
+import Loading from "@/app/loading";
 
 export default function Users() {
   const [numberOfAlbums, setsetNumberOfAlbums] = useState<any>([]);
@@ -66,11 +67,9 @@ export default function Users() {
                   });
 
                 return (
-                  <User
-                    key={user.id}
-                    user={user}
-                    numberOfAlbums={numberOfAlbums}
-                  />
+                  <Suspense fallback={<Loading />} key={user.id}>
+                    <User user={user} numberOfAlbums={numberOfAlbums} />
+                  </Suspense>
                 );
               })}
           </div>
@@ -79,7 +78,7 @@ export default function Users() {
         <div>
           <h1 className="font-bold text-lg">Albums</h1>
 
-          <div className="grid grid-cols-4 px-6 gap-7">
+          <div className="grid grid-cols-4 px-6 gap-7 mobile:grid-cols-2 mobile:px-3">
             {albums.map((album: album, index: number) => {
               return (
                 <Link
