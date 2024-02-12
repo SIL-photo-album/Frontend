@@ -79,7 +79,7 @@ export default function Users() {
         <div>
           <h1 className="font-bold text-lg">Albums</h1>
 
-          <div className="grid grid-cols-4 px-6 gap-7">
+          <div className="grid grid-cols-4 px-6 gap-7 mobile:grid-cols-2 mobile:px-3">
             {albums.map((album: album, index: number) => {
               return (
                 <Link
