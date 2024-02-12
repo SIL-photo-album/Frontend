@@ -1,6 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 import { useRouter } from "next/navigation";
-import AlbumPage from "@/app/(dashboard)/album/[id]/page"; // Assuming this is your component file
+import AlbumPage from "@/app/(dashboard)/album/[id]/page";
 
 // Mock useRouter hook
 jest.mock("next/navigation", () => ({
