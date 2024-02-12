@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar/Navbar";
 
 describe("sample test", () => {
   it("example test", () => {
+    // render(<Navbar />)
     expect(1 + 1).toBe(2);
   });
 });

@@ -9,6 +9,7 @@ import User from "@/components/user/user";
 import { album, user } from "../../../../types";
 import Loading from "@/app/loading";
 import UserLoader from "@/components/loading/User.loader";
+import Album from "@/components/album/album";
 
 export default function Users() {
   const [numberOfAlbums, setsetNumberOfAlbums] = useState<any>([]);
@@ -83,19 +84,7 @@ export default function Users() {
             {albums.map((album: album, index: number) => {
               return (
                 <Suspense fallback={<UserLoader />} key={index}>
-                  <Link
-                    href={`/album/${album.id}`}
-                    key={index}
-                    className="shadow-md cursor-pointer flex flex-col item-center justify-center px-3 py-5 rounded-md gap-2 hover:shadow-lg"
-                  >
-                    <Image
-                      src={albumImage}
-                      width={70}
-                      height={70}
-                      alt={albumImage}
-                    />
-                    <span className="hover:text-blue-500">{album.title}</span>
-                  </Link>
+                  <Album title={album.title} albumId={album.id} />
                 </Suspense>
               );
             })}
