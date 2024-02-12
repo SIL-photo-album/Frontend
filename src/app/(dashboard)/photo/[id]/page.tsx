@@ -43,8 +43,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
       {photo && (
         <div
-          className="flex flex-col items-center py-[2em] mt-[10px]
-         mobile:overflow-hidden"
+          className="flex flex-col justify-start items-start py-[2em] mt-[10px]
+         mobile:overflow-hidden mobile:px-3 ml-[1em]"
         >
           <Image
             width={600}
@@ -61,7 +61,10 @@ export default function Page({ params }: { params: { id: string } }) {
           </h1>
 
           {!isEdit ? (
-            <button className="rounded" onClick={() => setIsEdit(true)}>
+            <button
+              className="rounded border-1 outline-none py-1 px-2 bg-blue-500 text-white"
+              onClick={() => setIsEdit(true)}
+            >
               Edit
             </button>
           ) : (
