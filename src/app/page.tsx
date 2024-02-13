@@ -11,7 +11,7 @@ export default function Page() {
         <div className="flex flex-col gap-4">
           <h1 className="text-[2em] uppercase font-bold">Photo Album</h1>
           <span>
-            In this assessment text, I am building a web application <br /> that
+            In this assessment test, I am building a web application <br /> that
             a person can login or signup using google or github. After
             authentication, <br />
             the person can be able to see a list of all users with their albums

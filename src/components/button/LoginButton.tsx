@@ -13,9 +13,9 @@ export default function LoginButton() {
 
   const signInWithGoogle = async () => {
     try {
-        const result = await signInWithPopup(auth, googleProvider);
-        localStorage.setItem("email", JSON.stringify(result.user.email));
-        router.push("/home");
+      const result = await signInWithPopup(auth, googleProvider);
+      localStorage.setItem("email", JSON.stringify(result.user.email));
+      router.push("/home");
     } catch (error) {
       console.error(error);
     }
@@ -38,15 +38,20 @@ export default function LoginButton() {
   }, []);
   return (
     <div>
-      {userEmail !== null ? (
-        <button onClick={logOut}>Logout</button>
-      ) : (
+      {!userEmail && (
         <button
           onClick={signInWithGoogle}
           className="flex items-center gap-2 px-3 py-1 border-[1px] border-black rounded-md outline-none mobile:text-small mobile:flex-nowrap"
+          data-testid="signIn"
         >
           <Image src={googleImg} width={20} height={20} alt={googleImg} />
           Sign in with Google
+        </button>
+      )}
+
+      {userEmail && (
+        <button onClick={logOut} data-testid="Logout">
+          Logout
         </button>
       )}
     </div>
