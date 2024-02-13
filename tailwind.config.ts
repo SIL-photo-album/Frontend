@@ -15,7 +15,7 @@ const config: Config = {
       },
     },
     screens: {
-      mobile: { max: "380px" },
+      mobile: { max: "400px" },
     },
   },
   plugins: [],
