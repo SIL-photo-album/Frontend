@@ -15,20 +15,56 @@ export default function Page({ params }: { params: { id: string } }) {
   const [newTitle, setNewTitle] = useState<string>("");
 
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/photos/${params.id}`)
-      .then(function (response) {
-        // handle success
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `https://jsonplaceholder.typicode.com/photos/${params.id}`
+        );
         if (response.status !== 200) {
+          console.log("Error fetching photo data");
+          return;
         }
-        console.log(response.data);
         setPhoto(response.data);
-      })
-      .catch(function (error) {
-        // handle error
+      } catch (error) {
         console.log(error);
-      });
+      }
+    }
+
+    fetchData();
   }, [params.id]);
+
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newTitle) {
+      alert("You need to add a new title");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${photo?.id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({
+            title: newTitle,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+      if (!response.ok) {
+        console.log("Error updating title");
+        return;
+      }
+      const data = await response.json();
+      setUpdatedTitle(data.title);
+      setIsEdit(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -68,31 +104,7 @@ export default function Page({ params }: { params: { id: string } }) {
               Edit
             </button>
           ) : (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!newTitle) {
-                  alert("You need to add a new title");
-                }
-
-                fetch(
-                  `https://jsonplaceholder.typicode.com/posts/${photo.id}`,
-                  {
-                    method: "PATCH",
-                    body: JSON.stringify({
-                      title: newTitle,
-                    }),
-                    headers: {
-                      "Content-type": "application/json; charset=UTF-8",
-                    },
-                  }
-                )
-                  .then((response) => response.json())
-                  .then((data) => setUpdatedTitle(data.title));
-
-                setIsEdit(false);
-              }}
-            >
+            <form onSubmit={handleEditSubmit}>
               <input
                 type="text"
                 placeholder="Enter new title"
