@@ -1,5 +1,5 @@
 import Link from "next/link";
-import albumImage from "./../../../public/album.svg"
+import albumImage from "./../../../public/album.svg";
 import Image from "next/image";
 
 export default function Album({
