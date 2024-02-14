@@ -12,35 +12,35 @@ export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [albums, setAlbums] = useState<any>([]);
   const [user, setUser] = useState<any>([]);
+
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+    async function fetchData() {
+      try {
+        const userResponse = await axios.get(
+          `https://jsonplaceholder.typicode.com/users/${params.id}`
+        );
+        if (userResponse.status !== 200) {
+          console.log("Error fetching user");
+          return;
         }
+        setUser(userResponse.data);
 
-        setUser(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-
-    axios
-      .get(`https://jsonplaceholder.typicode.com/albums?userId=${params.id}`)
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+        const albumsResponse = await axios.get(
+          `https://jsonplaceholder.typicode.com/albums?userId=${params.id}`
+        );
+        if (albumsResponse.status !== 200) {
+          console.log("Error fetching albums");
+          return;
         }
-
-        setAlbums(response.data);
-      })
-      .catch(function (error) {
-        // handle error
+        setAlbums(albumsResponse.data);
+      } catch (error) {
         console.log(error);
-      });
+      }
+    }
+
+    fetchData();
   }, [params.id]);
+
   return (
     <div>
       <Navbar />

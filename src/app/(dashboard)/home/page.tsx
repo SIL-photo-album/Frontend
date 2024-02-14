@@ -3,25 +3,39 @@ import Navbar from "@/components/navbar/Navbar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import User from "@/components/user/user";
-import { user, userPropType } from "../../../../types";
+import { user } from "../../../../types";
 
 export default function Users() {
-  const [numberOfAlbums, setsetNumberOfAlbums] = useState<any>([]);
+  const [numberOfAlbums, setNumberOfAlbums] = useState<any>([]);
   const [users, setUsers] = useState<user[]>([]);
 
   useEffect(() => {
-    Promise.all([axios.get("https://jsonplaceholder.typicode.com/users")])
-      .then((responses) => {
-        const usersResponse = responses[0];
+    async function fetchData() {
+      try {
+        const usersResponse = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
         if (usersResponse.status !== 200) {
-          // handle error
-        } else {
-          setUsers(usersResponse.data);
+          console.log("Error");
+          return; // Exit function if there's an error
         }
-      })
-      .catch(function (errors) {
-        console.log(errors);
-      });
+        setUsers(usersResponse.data);
+
+        // Fetch albums for each user
+        const albumsPromises = usersResponse.data.map((user: user) =>
+          axios.get(
+            `https://jsonplaceholder.typicode.com/albums?userId=${user.id}`
+          )
+        );
+        const albumsResponses = await Promise.all(albumsPromises);
+        const albumsData = albumsResponses.map((response) => response.data);
+        setNumberOfAlbums(albumsData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
   }, []);
 
   return (
@@ -33,31 +47,13 @@ export default function Users() {
           <h1 className="font-bold text-lg">Users</h1>
 
           <div className="flex flex-wrap items-center ml-[2em] py-[2em] gap-[2em]">
-            {users &&
-              users.map((user: user, index: number) => {
-                axios
-                  .get(
-                    `https://jsonplaceholder.typicode.com/albums?userId=${user.id}`
-                  )
-                  .then(function (response) {
-                    // handle success
-                    if (response.status !== 200) {
-                    }
-
-                    setsetNumberOfAlbums(response.data);
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-
-                return (
-                  <User
-                    key={index}
-                    user={user}
-                    numberOfAlbums={numberOfAlbums}
-                  />
-                );
-              })}
+            {users.map((user: user, index: number) => (
+              <User
+                key={index}
+                user={user}
+                numberOfAlbums={numberOfAlbums[index]}
+              />
+            ))}
           </div>
         </div>
       </div>
