@@ -60,7 +60,10 @@ export default function Page({ params }: { params: { id: string } }) {
           <span> {album && album.title}</span>
         </div>
 
-        <div className="grid py-3 grid-cols-4 gap-5 px-3 mobile:grid-cols-2">
+        <div
+          className="grid py-3 grid-cols-4 gap-5 px-3 mobile:grid-cols-2"
+          data-testid="album-component"
+        >
           {photos.map((photo: photoInterface, index: number) => (
             <Album
               key={index}
