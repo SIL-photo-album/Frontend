@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Navbar from "@/components/navbar/Navbar";
@@ -7,8 +7,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import backIcon from "./../../../../../public/backIcon.svg";
+import Loading from "../loading";
+import dynamic from "next/dynamic";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const Album = dynamic(() => import("@/components/album/album"), {
+    loading: () => <Loading />,
+  });
   const [photos, setPhotos] = useState<photoInterface[]>([]);
   const [album, setAlbum] = useState<any>([]);
   const router = useRouter();
@@ -57,20 +62,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
         <div className="grid py-3 grid-cols-4 gap-5 px-3 mobile:grid-cols-2">
           {photos.map((photo: photoInterface, index: number) => (
-            <Link
-              href={`/photo/${photo.id}`}
+            <Album
               key={index}
-              className="flex flex-col shadow-md rounded-md gap-2 cursor-pointer"
-            >
-              <Image
-                src={photo.thumbnailUrl}
-                alt={photo.thumbnailUrl}
-                width={150}
-                height={150}
-                loading="lazy" // Lazy loading for images
-              />
-              <span className="flex flex-nowrap">{photo.title}</span>
-            </Link>
+              size={150}
+              title={photo.title}
+              id={`/photo/${photo.id}`}
+              imgUrl={photo.thumbnailUrl}
+            />
           ))}
         </div>
       </div>

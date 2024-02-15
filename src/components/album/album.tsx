@@ -1,20 +1,31 @@
 import Link from "next/link";
 import albumImage from "./../../../public/album.svg";
+
 import Image from "next/image";
 
 export default function Album({
   title,
-  albumId,
+  id,
+  imgUrl,
+  size,
 }: {
   title: string;
-  albumId: number;
+  imgUrl?: string;
+  id: string;
+  size?: number;
 }) {
+  console.log(imgUrl)
   return (
     <Link
-      href={`/album/${albumId}`}
+      href={id}
       className="shadow-md cursor-pointer flex flex-col item-center justify-center px-3 py-5 rounded-md gap-2 hover:shadow-lg"
     >
-      <Image src={albumImage} width={70} height={70} alt={albumImage} />
+      <Image
+        src={imgUrl || albumImage}
+        width={size || 70}
+        height={size || 70}
+        alt={imgUrl || albumImage}
+      />
       <span>{title}</span>
     </Link>
   );

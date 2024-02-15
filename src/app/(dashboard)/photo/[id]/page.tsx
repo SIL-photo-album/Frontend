@@ -79,7 +79,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
       {photo && (
 
-        <figure className="max-w-lg ml-[1em]">
+        <figure className="max-w-lg ml-[1em] mb-[2em]">
           <Image
             width={600}
             height={600}
