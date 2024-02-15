@@ -14,7 +14,6 @@ export default function Album({
   id: string;
   size?: number;
 }) {
-  console.log(imgUrl)
   return (
     <Link
       href={id}
