@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import AlbumPage from "@/app/(dashboard)/album/[id]/page";
 
@@ -23,5 +23,10 @@ describe("Page component", () => {
 
     // Expect the back function to be called
     expect(mockRouter.back).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should get the album component", () => {
+    render(<AlbumPage params={{ id: "1" }} />);
+    expect(screen.getByTestId("album-component")).toBeInTheDocument();
   });
 });
