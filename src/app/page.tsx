@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <div>
       <Navbar />
-      <div className="flex gap-5 px-[2em] justify-center items-center mt-[3em]">
+      <div className="flex gap-5 px-[2em] justify-center items-center mt-[3em] mobile:flex-col mobile:px-[1em] mobile:mt-[2em] mobile:items-start mobile:justify-start">
         <div className="flex flex-col gap-4">
           <h1 className="text-[2em] uppercase font-bold">Photo Album</h1>
           <span>

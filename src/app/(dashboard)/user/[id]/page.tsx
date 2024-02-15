@@ -5,42 +5,47 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import backIcon from "./../../../../../public/backIcon.svg";
-import Album from "@/components/album/album";
+// import Album from "@/components/album/album";
 import { album } from "../../../../../types";
+import dynamic from "next/dynamic";
+import Loading from "../loading";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const Album = dynamic(() => import("@/components/album/album"), {
+    loading: () => <Loading />,
+  });
   const router = useRouter();
   const [albums, setAlbums] = useState<any>([]);
   const [user, setUser] = useState<any>([]);
+
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+    async function fetchData() {
+      try {
+        const userResponse = await axios.get(
+          `https://jsonplaceholder.typicode.com/users/${params.id}`
+        );
+        if (userResponse.status !== 200) {
+          console.log("Error fetching user");
+          return;
         }
+        setUser(userResponse.data);
 
-        setUser(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-
-    axios
-      .get(`https://jsonplaceholder.typicode.com/albums?userId=${params.id}`)
-      .then(function (response) {
-        // handle success
-        if (response.status !== 200) {
+        const albumsResponse = await axios.get(
+          `https://jsonplaceholder.typicode.com/albums?userId=${params.id}`
+        );
+        if (albumsResponse.status !== 200) {
+          console.log("Error fetching albums");
+          return;
         }
-
-        setAlbums(response.data);
-      })
-      .catch(function (error) {
-        // handle error
+        setAlbums(albumsResponse.data);
+      } catch (error) {
         console.log(error);
-      });
+      }
+    }
+
+    fetchData();
   }, [params.id]);
+
   return (
     <div>
       <Navbar />
@@ -59,7 +64,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
         <div className="grid grid-cols-4 px-6 gap-7 mobile:grid-cols-2">
           {albums.map((album: album, index: number) => {
-            return <Album key={index} title={album.title} albumId={album.id} />;
+            return (
+              <Album
+                key={index}
+                title={album.title}
+                id={`/album/${album.id}`}
+              />
+            );
           })}
         </div>
       </div>

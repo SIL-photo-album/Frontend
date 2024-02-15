@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Navbar from "@/components/navbar/Navbar";
 import { photoInterface } from "../../../../../types";
@@ -7,40 +7,41 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import backIcon from "./../../../../../public/backIcon.svg";
+import Loading from "../loading";
+import dynamic from "next/dynamic";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const Album = dynamic(() => import("@/components/album/album"), {
+    loading: () => <Loading />,
+  });
   const [photos, setPhotos] = useState<photoInterface[]>([]);
   const [album, setAlbum] = useState<any>([]);
   const router = useRouter();
 
-  useEffect(() => {
-    Promise.all([
-      axios.get(`https://jsonplaceholder.typicode.com/albums/${params.id}`),
-      axios.get(
-        `https://jsonplaceholder.typicode.com/photos?albumId=${params.id}`
-      ),
-    ])
-      .then(function (responses) {
-        const albumResponse = responses[0];
-        const photosResponse = responses[1];
+  const fetchData = useCallback(async () => {
+    try {
+      const [albumResponse, photosResponse] = await Promise.all([
+        axios.get(`https://jsonplaceholder.typicode.com/albums/${params.id}`),
+        axios.get(
+          `https://jsonplaceholder.typicode.com/photos?albumId=${params.id}`
+        ),
+      ]);
 
-        if (albumResponse.status !== 200) {
-          // handle error
-        } else {
-          setAlbum(albumResponse.data);
-        }
+      if (albumResponse.status !== 200 || photosResponse.status !== 200) {
+        console.log("Error fetching data");
+        return;
+      }
 
-        if (photosResponse.status !== 200) {
-          // handle error
-        } else {
-          setPhotos(photosResponse.data);
-        }
-      })
-      .catch(function (errors) {
-        // handle errors
-        console.log(errors);
-      });
+      setAlbum(albumResponse.data);
+      setPhotos(photosResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
   }, [params.id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div>
@@ -60,24 +61,15 @@ export default function Page({ params }: { params: { id: string } }) {
         </div>
 
         <div className="grid py-3 grid-cols-4 gap-5 px-3 mobile:grid-cols-2">
-          {photos &&
-            photos.map((photo: photoInterface, index: number) => {
-              return (
-                <Link
-                  href={`/photo/${photo.id}`}
-                  key={index}
-                  className="flex flex-col shadow-md rounded-md gap-2 cursor-pointer"
-                >
-                  <Image
-                    src={photo.thumbnailUrl}
-                    alt={photo.thumbnailUrl}
-                    width={150}
-                    height={150}
-                  />
-                  <span className="flex flex-nowrap">{photo.title}</span>
-                </Link>
-              );
-            })}
+          {photos.map((photo: photoInterface, index: number) => (
+            <Album
+              key={index}
+              size={150}
+              title={photo.title}
+              id={`/photo/${photo.id}`}
+              imgUrl={photo.thumbnailUrl}
+            />
+          ))}
         </div>
       </div>
     </div>
