@@ -1,11 +1,15 @@
 "use client";
 import Navbar from "@/components/navbar/Navbar";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import User from "@/components/user/user";
+import { useState, useEffect} from "react";
 import { user } from "../../../../types";
+import Loading from "./loading";
+import dynamic from "next/dynamic";
 
 export default function Users() {
+  const User = dynamic(() => import("@/components/user/user"), {
+    loading: () => <Loading />,
+  });
   const [numberOfAlbums, setNumberOfAlbums] = useState<any>([]);
   const [users, setUsers] = useState<user[]>([]);
 
@@ -17,7 +21,7 @@ export default function Users() {
         );
         if (usersResponse.status !== 200) {
           console.log("Error");
-          return; // Exit function if there's an error
+          return;
         }
         setUsers(usersResponse.data);
 
