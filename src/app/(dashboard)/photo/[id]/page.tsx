@@ -78,24 +78,18 @@ export default function Page({ params }: { params: { id: string } }) {
       </button>
 
       {photo && (
-        <div
-          className="flex flex-col justify-start items-start py-[2em] mt-[10px]
-         mobile:overflow-hidden mobile:px-3 ml-[1em]"
-        >
+
+        <figure className="max-w-lg ml-[1em] mb-[2em]">
           <Image
             width={600}
             height={600}
+            className="h-auto max-w-full rounded-lg"
             src={photo.url}
-            className="w-[600px] h-[600px] rounded mobile:w-[300px] mobile:h-[300px]"
-            alt={photo.url}
+            alt="image description"
           />
-          <h1 className="flex gap-2">
-            Title:
-            <span className="font-bold">
-              {updatedTitle ? updatedTitle : photo.title}
-            </span>
-          </h1>
-
+          <figcaption className="mt-2 text-sm text-center text-black dark:text-black">
+            Title: {updatedTitle ? updatedTitle : photo.title}
+          </figcaption>
           {!isEdit ? (
             <button
               className="rounded border-1 outline-none py-1 px-2 bg-blue-500 text-white"
@@ -104,21 +98,39 @@ export default function Page({ params }: { params: { id: string } }) {
               Edit
             </button>
           ) : (
-            <form onSubmit={handleEditSubmit}>
-              <input
-                type="text"
-                placeholder="Enter new title"
-                className="border-black border focus:outline-none focus:border-blue-500 rounded-md px-2 py-1"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-              />
-              <div>
-                <button onClick={() => setIsEdit(false)}>Cancel</button>
-                <button type="submit">Update</button>
+            <form className="max-w-sm mx-auto" onSubmit={handleEditSubmit}>
+              <div className="mb-5">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Your email
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter new title"
+                  className="bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex gap-4">
+                <button
+                  type="submit"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={() => setIsEdit(false)}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Update
+                </button>
               </div>
             </form>
           )}
-        </div>
+        </figure>
       )}
     </div>
   );
