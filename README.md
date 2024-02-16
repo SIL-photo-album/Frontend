@@ -4,10 +4,36 @@
 
 ## Installation Instructions
 
-Run this command to install the following dependencies
+Run this command to install `Curl`
 
 ```bash
-    npm install node
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt install curl -y
+```
+
+Then install `Node js`
+
+```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+```
+
+Activate `NVM` using the command below
+
+```bash
+    .bashrc
+```
+
+### Install the latest LTS version of Node
+
+```bash
+    nvm install --lts
+```
+
+### Make the default LTS version as NVM
+
+```bash
+    nvm alias default 18.18.2
 ```
 
 check to see if node js has been installed successfully
