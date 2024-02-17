@@ -4,6 +4,8 @@
 
 ## Installation Instructions
 
+### On Linux
+
 Run this command to install `Curl`
 
 ```bash
@@ -74,3 +76,8 @@ To setup the project, you need to clone the project and install the dependencies
 ### Unit Test
 
 To run unit tests, run the following command in the terminal: 1. From your root folder, run `npm run  test`
+
+### Starting the Project
+
+To start and view the project, run `npm run dev`
+this will run on port 3000
