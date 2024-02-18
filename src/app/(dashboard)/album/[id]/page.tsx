@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Navbar from "@/components/navbar/Navbar";
 import { photoInterface } from "../../../../../types";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import backIcon from "./../../../../../public/backIcon.svg";

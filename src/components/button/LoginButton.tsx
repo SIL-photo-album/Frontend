@@ -6,6 +6,7 @@ import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function LoginButton() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -50,9 +51,14 @@ export default function LoginButton() {
       )}
 
       {userEmail && (
-        <button onClick={logOut} data-testid="Logout">
-          Logout
-        </button>
+        <div className="flex gap-4">
+          <Link href="/home" className="hover:text-blue-500">
+            Home
+          </Link>
+          <button onClick={logOut} data-testid="Logout">
+            Logout
+          </button>
+        </div>
       )}
     </div>
   );
