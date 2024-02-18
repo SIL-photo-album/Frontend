@@ -5,7 +5,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import backIcon from "./../../../../../public/backIcon.svg";
-// import Album from "@/components/album/album";
 import { album } from "../../../../../types";
 import dynamic from "next/dynamic";
 import Loading from "../loading";
